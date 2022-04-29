@@ -21,9 +21,7 @@ class TodoListVC: UITableViewController {
         itemArray.append(newItem2)
         itemArray.append(newItem3)
         
-//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-//            itemArray = items
-//        }
+        loadItem()
     }
     
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -46,7 +44,7 @@ class TodoListVC: UITableViewController {
         return cell
     }
 
-//MARK: TableView Delegate Methods
+//MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -57,7 +55,7 @@ class TodoListVC: UITableViewController {
     }
     
     
-//MARK: - ADD NEW ITEMS
+//MARK: - Add New Items
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -88,6 +86,8 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true)
     }
     
+//MARK: - Model Manipulation Methods
+    
     func saveItems() {
         let encoder = PropertyListEncoder()
         
@@ -99,6 +99,16 @@ class TodoListVC: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+    func loadItem() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                print(String(describing: error))
+            }
+        }
+    }
 }
-
-
