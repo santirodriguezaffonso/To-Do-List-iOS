@@ -5,11 +5,11 @@ import UIKit
 class TodoListVC: UITableViewController {
     
     var itemArray = [Item]()
-    
-    let defaults = UserDefaults.standard
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first.ap
         
         let newItem = Item()
         let newItem2 = Item()
