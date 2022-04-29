@@ -41,7 +41,8 @@ class TodoListVC: UITableViewController {
         cell.textLabel?.text = items.title
         
         cell.accessoryType = items.done == true ? .checkmark : .none
-    
+        saveItems()
+        
         return cell
     }
 
@@ -50,8 +51,8 @@ class TodoListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        saveItems()
         
-        tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
@@ -75,18 +76,7 @@ class TodoListVC: UITableViewController {
             
             if textField.text != nil {
                 self.itemArray.append(newItem)
-                
-                let encoder = PropertyListEncoder()
-                
-                do {
-                    let data = try encoder.encode(self.itemArray)
-                    try data.write(to: self.dataFilePath!)
-                } catch {
-                    print(String(describing: error))
-                }
-                
-                
-                self.tableView.reloadData()
+                self.saveItems()
             }
         }
         
@@ -97,4 +87,18 @@ class TodoListVC: UITableViewController {
         alert.addAction(action)
         present(alert, animated: true)
     }
+    
+    func saveItems() {
+        let encoder = PropertyListEncoder()
+        
+        do {
+            let data = try encoder.encode(itemArray)
+            try data.write(to: dataFilePath!)
+        } catch {
+            print(String(describing: error))
+        }
+        tableView.reloadData()
+    }
 }
+
+
