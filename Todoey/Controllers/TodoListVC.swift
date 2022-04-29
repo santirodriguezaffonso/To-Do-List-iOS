@@ -5,11 +5,10 @@ import UIKit
 class TodoListVC: UITableViewController {
     
     var itemArray = [Item]()
+    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first.ap
         
         let newItem = Item()
         let newItem2 = Item()
@@ -22,9 +21,9 @@ class TodoListVC: UITableViewController {
         itemArray.append(newItem2)
         itemArray.append(newItem3)
         
-        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
-            itemArray = items
-        }
+//        if let items = defaults.array(forKey: "TodoListArray") as? [Item] {
+//            itemArray = items
+//        }
     }
     
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -76,7 +75,17 @@ class TodoListVC: UITableViewController {
             
             if textField.text != nil {
                 self.itemArray.append(newItem)
-                self.defaults.set(self.itemArray, forKey: "TodoListArray")
+                
+                let encoder = PropertyListEncoder()
+                
+                do {
+                    let data = try encoder.encode(self.itemArray)
+                    try data.write(to: self.dataFilePath!)
+                } catch {
+                    print(String(describing: error))
+                }
+                
+                
                 self.tableView.reloadData()
             }
         }
