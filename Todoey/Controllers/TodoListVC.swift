@@ -10,17 +10,6 @@ class TodoListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let newItem = Item()
-        let newItem2 = Item()
-        let newItem3 = Item()
-        
-        newItem.title = "Eleven"
-        newItem2.title = "Mike"
-        newItem3.title = "Eagle"
-        itemArray.append(newItem)
-        itemArray.append(newItem2)
-        itemArray.append(newItem3)
-        
         loadItem()
     }
     
@@ -37,9 +26,7 @@ class TodoListVC: UITableViewController {
         let items = itemArray[indexPath.row]
         
         cell.textLabel?.text = items.title
-        
         cell.accessoryType = items.done == true ? .checkmark : .none
-        saveItems()
         
         return cell
     }
@@ -49,6 +36,7 @@ class TodoListVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
+        
         saveItems()
         
         tableView.deselectRow(at: indexPath, animated: true)
@@ -87,7 +75,8 @@ class TodoListVC: UITableViewController {
     }
     
 //MARK: - Model Manipulation Methods
-    
+
+    // First Step - Encode the new data and save it in our own plist.file
     func saveItems() {
         let encoder = PropertyListEncoder()
         
@@ -95,11 +84,12 @@ class TodoListVC: UITableViewController {
             let data = try encoder.encode(itemArray)
             try data.write(to: dataFilePath!)
         } catch {
-            print(String(describing: error))
+            print("Error encoding item array\(String(describing: error))")
         }
         tableView.reloadData()
     }
     
+    // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
     func loadItem() {
         if let data = try? Data(contentsOf: dataFilePath!) {
             let decoder = PropertyListDecoder()
@@ -107,7 +97,7 @@ class TodoListVC: UITableViewController {
             do {
                 itemArray = try decoder.decode([Item].self, from: data)
             } catch {
-                print(String(describing: error))
+                print("Error decoding items\(String(describing: error))")
             }
         }
     }
