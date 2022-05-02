@@ -1,16 +1,18 @@
 
 
 import UIKit
+import CoreData
 
 class TodoListVC: UITableViewController {
     
     var itemArray = [Item]()
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
-
+    
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        loadItem()
+        print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
+//        loadItem()
     }
     
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -57,8 +59,9 @@ class TodoListVC: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             //What will happen once the user clicks this button:
             
-            let newItem = Item()
+            let newItem = Item(context: self.context)
             newItem.title = textField.text!
+            newItem.done = false
             
             if textField.text != nil {
                 self.itemArray.append(newItem)
@@ -78,27 +81,17 @@ class TodoListVC: UITableViewController {
 
     // First Step - Encode the new data and save it in our own plist.file
     func saveItems() {
-        let encoder = PropertyListEncoder()
         
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)
+            try context.save()
         } catch {
-            print("Error encoding item array\(String(describing: error))")
+            print("Error saving context\(error)")
         }
         tableView.reloadData()
     }
     
     // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
     func loadItem() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                print("Error decoding items\(String(describing: error))")
-            }
+        
         }
     }
-}
