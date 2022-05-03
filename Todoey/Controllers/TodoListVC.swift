@@ -12,7 +12,8 @@ class TodoListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-//        loadItem()
+        
+        loadItem()
     }
     
 //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -92,6 +93,12 @@ class TodoListVC: UITableViewController {
     
     // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
     func loadItem() {
+        let request = Item.fetchRequest()
         
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from Context\(error)")
+        }
         }
     }
