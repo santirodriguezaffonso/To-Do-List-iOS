@@ -92,14 +92,14 @@ class TodoListVC: UITableViewController {
     }
     
     // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
-    func loadItem() {
-        let request = Item.fetchRequest()
+    func loadItem(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
         
         do {
             itemArray = try context.fetch(request)
         } catch {
             print("Error fetching data from Context\(error)")
         }
+        tableView.reloadData()
     }
 }
 
@@ -110,23 +110,11 @@ extension TodoListVC: UISearchBarDelegate {
         let request = Item.fetchRequest()
         
         // This create a predicate that filter the query
-        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
-        
-        request.predicate = predicate
+        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         // This sort the tableview in alphabetical order by "title"
-        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        request.sortDescriptors = [sortDescriptor]
-        
-        // Finally in every case you add these constants to the "request"
-        
-        do {
-            itemArray = try context.fetch(request)
-        } catch {
-            print("Error fetching data from Context\(error)")
-        }
-        
-        tableView.reloadData()
+        loadItem(with: request)
     }
 }
