@@ -20,6 +20,8 @@ class TodoListVC: UITableViewController {
     //        return
     //    }
     
+//MARK: - TableView Delegate Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
     }
@@ -33,8 +35,6 @@ class TodoListVC: UITableViewController {
         
         return cell
     }
-    
-    //MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
