@@ -16,9 +16,9 @@ class TodoListVC: UITableViewController {
         loadItem()
     }
     
-//    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return
-//    }
+    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    //        return
+    //    }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemArray.count
@@ -33,8 +33,8 @@ class TodoListVC: UITableViewController {
         
         return cell
     }
-
-//MARK: - TableView Delegate Methods
+    
+    //MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -46,7 +46,7 @@ class TodoListVC: UITableViewController {
     }
     
     
-//MARK: - Add New Items
+    //MARK: - Add New Items
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -78,8 +78,8 @@ class TodoListVC: UITableViewController {
         present(alert, animated: true)
     }
     
-//MARK: - Model Manipulation Methods
-
+    //MARK: - Model Manipulation Methods
+    
     // First Step - Encode the new data and save it in our own plist.file
     func saveItems() {
         
@@ -100,5 +100,33 @@ class TodoListVC: UITableViewController {
         } catch {
             print("Error fetching data from Context\(error)")
         }
-        }
     }
+}
+
+//MARK: - Search Bar Methods
+extension TodoListVC: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let request = Item.fetchRequest()
+        
+        // This create a predicate that filter the query
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        request.predicate = predicate
+        
+        // This sort the tableview in alphabetical order by "title"
+        let sortDescriptor = NSSortDescriptor(key: "title", ascending: true)
+        
+        request.sortDescriptors = [sortDescriptor]
+        
+        // Finally in every case you add these constants to the "request"
+        
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching data from Context\(error)")
+        }
+        
+        tableView.reloadData()
+    }
+}
