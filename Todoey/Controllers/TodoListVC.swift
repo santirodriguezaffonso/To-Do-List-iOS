@@ -7,13 +7,18 @@ class TodoListVC: UITableViewController {
     
     var itemArray = [Item]()
     
+    var selectedCategory : Category? {
+        didSet{
+            loadItem()
+        }
+    }
+    
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
         
-        loadItem()
     }
     
     //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -63,6 +68,7 @@ class TodoListVC: UITableViewController {
             let newItem = Item(context: self.context)
             newItem.title = textField.text!
             newItem.done = false
+            newItem.parentCategory = self.selectedCategory
             
             if textField.text != nil {
                 self.itemArray.append(newItem)
@@ -92,8 +98,16 @@ class TodoListVC: UITableViewController {
     }
     
     // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
-    func loadItem(with request: NSFetchRequest<Item> = Item.fetchRequest()) {
+    func loadItem(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
         
+        let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
+       
+        if let additionalPredicate = predicate {
+            request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
+        } else {
+            request.predicate = categoryPredicate
+        }
+
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -110,12 +124,12 @@ extension TodoListVC: UISearchBarDelegate {
         let request = Item.fetchRequest()
         
         // This create a predicate that filter the query
-        request.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        let predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
         
         // This sort the tableview in alphabetical order by "title"
         request.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
         
-        loadItem(with: request)
+        loadItem(with: request, predicate: predicate)
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
