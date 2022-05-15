@@ -64,10 +64,11 @@ class CategoryVC: UITableViewController {
         
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         
-        let action = UIAlertAction(title: "Add", style: .default) { action in
-            
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let addAction = UIAlertAction(title: "Add", style: .default) { action in
+    
             let newCategory = Category(context: self.context)
-            newCategory.name = textField.text!
+            newCategory.name = textField.text!.capitalized
             
             if textField.text != nil {
                 self.categoryArray.append(newCategory)
@@ -81,9 +82,11 @@ class CategoryVC: UITableViewController {
             alertTextFiled.placeholder = "Create new category"
             textField = alertTextFiled
         }
-        alert.addAction(action)
-        present(alert, animated: true)
         
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     //MARK: - Data Manipulation Methods
