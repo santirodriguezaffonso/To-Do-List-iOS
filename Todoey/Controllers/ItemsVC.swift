@@ -18,7 +18,7 @@ class ItemsVC: SwipeTableVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        tableView.rowHeight = 75.0
+        
     }
     
     //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -32,7 +32,7 @@ class ItemsVC: SwipeTableVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
+        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         let items = itemArray[indexPath.row]
@@ -55,7 +55,7 @@ class ItemsVC: SwipeTableVC {
     }
     
     
-    //MARK: - Add New Items
+//MARK: - Add New Items
     
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
@@ -92,7 +92,7 @@ class ItemsVC: SwipeTableVC {
         alert.addAction(cancelAction)
     }
     
-    //MARK: - Model Manipulation Methods
+//MARK: - Model Manipulation Methods
     
     // First Step - Encode the new data and save it in our own plist.file
     func saveItems() {
@@ -108,13 +108,13 @@ class ItemsVC: SwipeTableVC {
     func loadItem(with request: NSFetchRequest<Item> = Item.fetchRequest(), predicate: NSPredicate? = nil) {
         
         let categoryPredicate = NSPredicate(format: "parentCategory.name MATCHES %@", selectedCategory!.name!)
-       
+        
         if let additionalPredicate = predicate {
             request.predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [categoryPredicate, additionalPredicate])
         } else {
             request.predicate = categoryPredicate
         }
-
+        
         do {
             itemArray = try context.fetch(request)
         } catch {
@@ -123,6 +123,7 @@ class ItemsVC: SwipeTableVC {
         tableView.reloadData()
     }
     
+    // This override the function from SwipeTableVC
     override func updateModel(at indexPath: IndexPath) {
         self.context.delete(self.itemArray[indexPath.row])
         self.itemArray.remove(at: indexPath.row)
@@ -132,6 +133,7 @@ class ItemsVC: SwipeTableVC {
 }
 
 //MARK: - Search Bar Methods
+
 extension ItemsVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

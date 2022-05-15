@@ -19,10 +19,10 @@ class CategoryVC: SwipeTableVC {
         super.viewDidLoad()
         
         loadCategories()
-        tableView.rowHeight = 75.0
+        
     }
     
-    //MARK: - Tableview Datasource Methods
+//MARK: - Tableview Datasource Methods
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categoryArray.count
@@ -55,7 +55,7 @@ class CategoryVC: SwipeTableVC {
         }
     }
     
-    //MARK: - Add New Categories
+//MARK: - Add New Categories
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         
@@ -88,7 +88,7 @@ class CategoryVC: SwipeTableVC {
         present(alert, animated: true)
     }
     
-    //MARK: - Data Manipulation Methods
+//MARK: - Data Manipulation Methods
     
     func saveCategories() {
         
