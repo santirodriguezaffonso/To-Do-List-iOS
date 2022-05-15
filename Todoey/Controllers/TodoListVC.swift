@@ -32,7 +32,7 @@ class TodoListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoItemCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         let items = itemArray[indexPath.row]
         
         cell.textLabel?.text = items.title
@@ -59,14 +59,15 @@ class TodoListVC: UITableViewController {
         var textField = UITextField()
         
         // This code create a pop-up notification.
-        let alert = UIAlertController(title: "Add New Item to Todoey", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New Item", message: "", preferredStyle: .alert)
         
         // This code line create a Button inside the alert in order to make an action with it.
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let action = UIAlertAction(title: "Add Item", style: .default) { action in
             //What will happen once the user clicks this button:
             
             let newItem = Item(context: self.context)
-            newItem.title = textField.text!
+            newItem.title = textField.text!.capitalized
             newItem.done = false
             newItem.parentCategory = self.selectedCategory
             
@@ -82,6 +83,7 @@ class TodoListVC: UITableViewController {
         }
         alert.addAction(action)
         present(alert, animated: true)
+        alert.addAction(cancelAction)
     }
     
     //MARK: - Model Manipulation Methods
