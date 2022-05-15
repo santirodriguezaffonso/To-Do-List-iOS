@@ -19,7 +19,6 @@ class CategoryVC: SwipeTableVC {
         super.viewDidLoad()
         
         loadCategories()
-        
         tableView.rowHeight = 75.0
     }
     
@@ -48,7 +47,7 @@ class CategoryVC: SwipeTableVC {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! TodoListVC
+        let destinationVC = segue.destination as! ItemsVC
         
         // This will identifier the current row selected
         if let indexPath = tableView.indexPathForSelectedRow {
@@ -110,6 +109,7 @@ class CategoryVC: SwipeTableVC {
         tableView.reloadData()
     }
     
+    // This override the function from SwipeTableVC
     override func updateModel(at indexPath: IndexPath) {
         self.context.delete(self.categoryArray[indexPath.row])
         self.categoryArray.remove(at: indexPath.row)

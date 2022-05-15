@@ -3,7 +3,7 @@
 import UIKit
 import CoreData
 
-class TodoListVC: UITableViewController {
+class ItemsVC: SwipeTableVC {
     
     var itemArray = [Item]()
     
@@ -18,7 +18,7 @@ class TodoListVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask))
-        
+        tableView.rowHeight = 75.0
     }
     
     //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -32,7 +32,9 @@ class TodoListVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
+        
         let items = itemArray[indexPath.row]
         
         cell.textLabel?.text = items.title
@@ -46,6 +48,8 @@ class TodoListVC: UITableViewController {
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         
         saveItems()
+        
+        tableView.reloadData()
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -74,6 +78,8 @@ class TodoListVC: UITableViewController {
             if textField.text != nil {
                 self.itemArray.append(newItem)
                 self.saveItems()
+                
+                self.tableView.reloadData()
             }
         }
         
@@ -96,7 +102,6 @@ class TodoListVC: UITableViewController {
         } catch {
             print("Error saving context\(error)")
         }
-        tableView.reloadData()
     }
     
     // Second Step - Decode the saved data from the plist.file, pointing out your Model.swift as data type.
@@ -117,10 +122,17 @@ class TodoListVC: UITableViewController {
         }
         tableView.reloadData()
     }
+    
+    override func updateModel(at indexPath: IndexPath) {
+        self.context.delete(self.itemArray[indexPath.row])
+        self.itemArray.remove(at: indexPath.row)
+        
+        self.saveItems()
+    }
 }
 
 //MARK: - Search Bar Methods
-extension TodoListVC: UISearchBarDelegate {
+extension ItemsVC: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let request = Item.fetchRequest()
