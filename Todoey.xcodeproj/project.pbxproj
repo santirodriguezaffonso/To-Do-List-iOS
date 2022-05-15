@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A2371A9428305B9700DB339D /* SwipeCellKit in Frameworks */ = {isa = PBXBuildFile; productRef = A2371A9328305B9700DB339D /* SwipeCellKit */; };
 		A23C0FEC28244401009DEAC2 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A23C0FEB28244401009DEAC2 /* CategoryVC.swift */; };
 		A2F51466281D94B30015606E /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A2F51464281D94B30015606E /* DataModel.xcdatamodeld */; };
 		EB2BE4FA239524DB00FB933B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB2BE4F9239524DB00FB933B /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A2371A9428305B9700DB339D /* SwipeCellKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,6 +112,9 @@
 			dependencies = (
 			);
 			name = Todoey;
+			packageProductDependencies = (
+				A2371A9328305B9700DB339D /* SwipeCellKit */,
+			);
 			productName = Todoey;
 			productReference = EB2BE4F6239524DB00FB933B /* Todoey.app */;
 			productType = "com.apple.product-type.application";
@@ -138,6 +143,9 @@
 				Base,
 			);
 			mainGroup = EB2BE4ED239524DB00FB933B;
+			packageReferences = (
+				A2371A9228305B9700DB339D /* XCRemoteSwiftPackageReference "SwipeCellKit" */,
+			);
 			productRefGroup = EB2BE4F7239524DB00FB933B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -370,6 +378,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A2371A9228305B9700DB339D /* XCRemoteSwiftPackageReference "SwipeCellKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwipeCellKit/SwipeCellKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A2371A9328305B9700DB339D /* SwipeCellKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A2371A9228305B9700DB339D /* XCRemoteSwiftPackageReference "SwipeCellKit" */;
+			productName = SwipeCellKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		A2F51464281D94B30015606E /* DataModel.xcdatamodeld */ = {

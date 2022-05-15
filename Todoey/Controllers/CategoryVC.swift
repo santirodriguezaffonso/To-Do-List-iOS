@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import SwipeCellKit
 
 class CategoryVC: UITableViewController {
     
@@ -28,9 +29,10 @@ class CategoryVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath) as! SwipeTableViewCell
         let categories = categoryArray[indexPath.row]
         
+        cell.delegate = self
         cell.textLabel?.text = categories.name
         
         return cell
@@ -38,7 +40,7 @@ class CategoryVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        performSegue(withIdentifier: "GoToItems", sender: self)
+        performSegue(withIdentifier: "goToItems", sender: self)
         
         tableView.deselectRow(at: indexPath, animated: true)
     }
@@ -103,3 +105,23 @@ class CategoryVC: UITableViewController {
     }
 }
 
+
+// MARK: - Swipe Cell Delegate Methods
+
+extension CategoryVC: SwipeTableViewCellDelegate {
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+                // handle action by updating model with deletion
+            }
+
+            // customize the action appearance
+            deleteAction.image = UIImage(named: "delete-icon")
+
+            return [deleteAction]
+    }
+    
+    
+}
