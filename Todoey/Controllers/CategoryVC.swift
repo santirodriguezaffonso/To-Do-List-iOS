@@ -20,10 +20,12 @@ class CategoryVC: UITableViewController {
         super.viewDidLoad()
         
         loadCategories()
+        
+        tableView.rowHeight = 75.0
     }
     
-//MARK: - Tableview Datasource Methods
-   
+    //MARK: - Tableview Datasource Methods
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return categoryArray.count
     }
@@ -54,10 +56,10 @@ class CategoryVC: UITableViewController {
         }
     }
     
-//MARK: - Add New Categories
+    //MARK: - Add New Categories
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-       
+        
         var textField = UITextField()
         
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
@@ -70,6 +72,8 @@ class CategoryVC: UITableViewController {
             if textField.text != nil {
                 self.categoryArray.append(newCategory)
                 self.saveCategories()
+                
+                self.tableView.reloadData()
             }
         }
         
@@ -79,7 +83,7 @@ class CategoryVC: UITableViewController {
         }
         alert.addAction(action)
         present(alert, animated: true)
-
+        
     }
     
     //MARK: - Data Manipulation Methods
@@ -91,9 +95,8 @@ class CategoryVC: UITableViewController {
         } catch {
             print("Error saving Category context\(error)")
         }
-        tableView.reloadData()
     }
-
+    
     func loadCategories(with request: NSFetchRequest<Category> = Category.fetchRequest()) {
         
         do {
@@ -114,14 +117,25 @@ extension CategoryVC: SwipeTableViewCellDelegate {
         guard orientation == .right else { return nil }
         
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-                // handle action by updating model with deletion
-            }
-
-            // customize the action appearance
-            deleteAction.image = UIImage(named: "delete-icon")
-
-            return [deleteAction]
+            
+            self.context.delete(self.categoryArray[indexPath.row])
+            self.categoryArray.remove(at: indexPath.row)
+            
+            self.saveCategories()
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete-icon")
+        
+        return [deleteAction]
     }
     
-    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeOptions {
+        
+        var options = SwipeOptions()
+        options.expansionStyle = .destructive
+        options.transitionStyle = .border
+        
+        return options
+    }
 }
