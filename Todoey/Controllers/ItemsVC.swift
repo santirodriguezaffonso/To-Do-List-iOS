@@ -21,9 +21,11 @@ class ItemsVC: SwipeTableVC {
         
     }
     
-    //    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    //        return
-    //    }
+    override func viewWillAppear(_ animated: Bool) {
+        if selectedCategory?.name != nil {
+            title = selectedCategory?.name
+        }
+    }
     
 //MARK: - TableView Delegate Methods
     
