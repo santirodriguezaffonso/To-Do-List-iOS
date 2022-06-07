@@ -1,5 +1,6 @@
 # Todoey
 
+[![GitHub issues](https://img.shields.io/github/issues/santirodriguezaffonso/To-Do-List-iOS?logo=github)](https://github.com/santirodriguezaffonso/To-Do-List-iOS/issues)
 ![Swift 5.3](https://img.shields.io/badge/Swift-5.6-orange.svg?style=flat)
 ![Platform](https://img.shields.io/badge/plataform-iOS-white)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-santiagorodriguezaffonso-blue)](https://www.linkedin.com/in/santiagorodriguezaffonso/)
