@@ -1,19 +1,26 @@
-![App Brewery Banner](https://github.com/londonappbrewery/Images/blob/master/AppBreweryBanner.png)
+# Todoey
+
+![Swift 5.3](https://img.shields.io/badge/Swift-5.6-orange.svg?style=flat)
+![Platform](https://img.shields.io/badge/plataform-iOS-white)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-santiagorodriguezaffonso-blue)](https://www.linkedin.com/in/santiagorodriguezaffonso/)
+
+Todoey is a kind of todo-list app to keep track of all your tasks or check your market list.
+
+## App Demo
+ *gif formar sacrifices some visual app smoothness quality.
 
 
-# Todoey ✓
 
-## Our Goal
+## Code Highlights
 
-The objective of this tutorial is to understand how to save data in iOS. We'll look at various choices and learn to use UserDefaults, Core Data and Realm.
+- CoreData persistance
+- TableView
+- UIAlertController & UIAlertAction
+- UnitTesting
+- [SwipeCellKit](https://github.com/SwipeCellKit/SwipeCellKit) library
+- Swift Pacakge Manager
 
 
-## What you will create
+>Finally, go to check other training apps! in [myportfolio](https://temporal-ursinia-346.notion.site/App-Portfolio-ea7f8e9bdac84c2c81541781a1e92668)
 
-A todolist app to keep track of all your tasks.
-
-
->This is a companion project to The App Brewery's Complete iOS Development Bootcamp, check out the full course at [www.appbrewery.co](https://www.appbrewery.co/)
-
-![End Banner](https://github.com/londonappbrewery/Images/blob/master/readme-end-banner.png)
-
+![Final Image](https://user-images.githubusercontent.com/100100565/172270362-2ff7b9f2-9678-458d-ac36-f5e4f3f7a772.png)
