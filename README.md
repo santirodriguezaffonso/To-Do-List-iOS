@@ -8,8 +8,6 @@
 Todoey is a kind of todo-list app to keep track of all your tasks or check your market list.
 
 ## App Demo
- *gif formar sacrifices some visual app smoothness quality.
-
 
 
 ## Code Highlights
