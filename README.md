@@ -12,7 +12,7 @@ Todoey is a kind of todo-list app to keep track of all your tasks or check your 
 
 ## Code Highlights
 
-- CoreData persistance
+- CoreData persistence
 - TableView
 - UIAlertController & UIAlertAction
 - UnitTesting
