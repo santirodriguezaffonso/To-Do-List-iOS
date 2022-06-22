@@ -17,7 +17,7 @@ Todoey is a kind of todo-list app to keep track of all your tasks or check your 
 - UIAlertController & UIAlertAction
 - UnitTesting
 - [SwipeCellKit](https://github.com/SwipeCellKit/SwipeCellKit) library
-- Swift Pacakge Manager
+- Swift Package Manager
 
 
 
